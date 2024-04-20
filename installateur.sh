@@ -3,16 +3,15 @@
 echo "/!\Le script dois etre lancer en mode root et pas simplement avec sudo\n"
 
 echo "suppression de logiciel inutile"
-apt remove firefox geany thonny vlc realvnc-viewer -y
+apt remove firefox geany thonny vlc realvnc-vnc-viewer -y
 
 echo "mise a jour du raspberry" 
-
 apt update
 apt upgrade -y
 
 echo "installer de wiringPi"
 wget https://github.com/WiringPi/WiringPi/releases/download/3.2/wiringpi_3.2_arm64.deb
-apt install  wiringpi_3.2_arm64.deb -y 
+apt-get install  ./wiringpi_3.2_arm64.deb -y 
 
 echo "Wiring PI installer"
 echo "Telechargement et installation du logiciel arduino"
