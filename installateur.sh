@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "/!\Le script dois etre lancer en mode root et pas simplement avec sudo\n";
+echo "/!\Le script dois etre lancer en mode root et pas simplement avec sudo\n"
 
 echo "suppression de logiciel inutile"
 apt remove firefox geany thonny vlc realvnc-viewer -y
