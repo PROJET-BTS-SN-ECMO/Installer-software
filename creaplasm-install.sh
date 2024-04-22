@@ -31,38 +31,41 @@ echo "mise a jour du raspberry"
 apt update
 apt upgrade -y
 
-echo "installation de qt"
-apt-get install qt6-base-dev -y
+echo "installation des dependence "
+apt-get install qt6-base-dev arduino -y
+echo "Installation de dependance effectuer"
 
 echo "installer de wiringPi"
-wget https://github.com/WiringPi/WiringPi/releases/download/3.2/wiringpi_3.2_arm64.deb
-apt-get install  ./wiringpi_3.2_arm64.deb -y 
-
+apt-get install ./wiringpi_3.2_arm64.deb -y 
 echo "Wiring PI installer"
-echo "Telechargement et installation du logiciel arduino"
-apt install arduino -y
 
-echo "Telechargement du logiciel a televersser"
-wget https://github.com/PROJET-BTS-SN-ECMO/mainsoft-arduino/releases/download/1.00/mainsoft-arduino.zip
+echo "Telechargement des composant logiciel"
+wget https://github.com/WiringPi/WiringPi/releases/download/3.2/wiringpi_3.2_arm64.deb
+wget https://github.com/PROJET-BTS-SN-ECMO/creaplasm-depot/releases/download/1.00/mainsoft-arduino.zip
+wget https://github.com/PROJET-BTS-SN-ECMO/creaplasm-depot/releases/download/1.00/Creaplasm-soft.zip
+wget https://github.com/PROJET-BTS-SN-ECMO/creaplasm-depot/releases/download/1.00/shutdownPushButton.zip
+wget https://github.com/PROJET-BTS-SN-ECMO/creaplasm-depot/releases/download/1.00/softCrea.service
 unzip mainsoft-arduino.zip -d /home/ecmo/mainsoft-arduino
+unzip Creaplasm-soft.zip -d /home/ecmo/mainSoft
+unzip shutdownPushButton.zip -d /home/ecmo/developpement/
+
+echo "Ajout de droit sur les composant logiciel"
 chown -R ecmo:ecmo /home/ecmo/mainsoft-arduino
+chmod +x /home/ecmo/mainSoft/Creaplasm-soft
+chmod +x /home/ecmo/developpement/shutdownPushButton/script.sh
+
+echo "Ajout des deux services au demarage du systeme d'exploitation"
+cp /home/ecmo/developpement/shutdownPushButton/btnService.service /etc/systemd/system
+cp /root/softCrea.service /etc/systemd/system
+
 echo "Brancher l'arduino Nano et ouvree l'IDE Arduino "
 echo "Et televersser le programme qui se trouve dans /home/ecmo/mainsoft-arduino"
 read -p "Appuyer pour entrer pour continuer une fois que vous avez televerser le logiciel dans l'arduino"
 
-echo "Telechargement du logiciel Principale"
-wget https://github.com/PROJET-BTS-SN-ECMO/Creaplasm-soft/releases/download/1.00/Creaplasm-soft.zip
-unzip Creaplasm-soft.zip -d /home/ecmo/mainSoft 
-chmod +x /home/ecmo/mainSoft/Creaplasm-soft
-
-echo "Telechargement de script d'arret par bouton du raspberry"
-wget https://github.com/PROJET-BTS-SN-ECMO/shutdownPushButton/releases/download/1.00/shutdownPushButton.zip
-unzip shutdownPushButton.zip -d /home/ecmo/developpement/
-chmod +x /home/ecmo/developpement/shutdownPushButton/script.sh
-cp /home/ecmo/developpement/shutdownPushButton/btnService.service /etc/systemd/system
+echo "Activation des service"
 systemctl enable btnService.service
-echo "[Unit]\nDescription=Logiciel Creaplasm\n[Service]\nExecStart=/home/ecmo/mainSoft/Creaplasm-soft\n[Install]\nWantedBy=multi-user.target" > /etc/systemd/system/softCrea.service
 systemctl enable softCrea.service
 
+echo "Composant logiciel installer redemarer pour utiliser le system"
 read -p "Appuyer pour entrer pour redemarrer" 
 reboot
