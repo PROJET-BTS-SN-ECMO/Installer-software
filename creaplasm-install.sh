@@ -42,9 +42,7 @@ echo "Wiring PI installer"
 echo "Telechargement et installation du logiciel arduino"
 apt install arduino -y
 
-
-
-apt "Telechargement du logiciel a televersser"
+echo "Telechargement du logiciel a televersser"
 wget https://github.com/PROJET-BTS-SN-ECMO/mainsoft-arduino/releases/download/1.00/mainsoft-arduino.zip
 unzip mainsoft-arduino.zip -d /home/ecmo/mainsoft-arduino
 chown -R ecmo:ecmo /home/ecmo/mainsoft-arduino
@@ -56,6 +54,15 @@ echo "Telechargement du logiciel Principale"
 wget https://github.com/PROJET-BTS-SN-ECMO/Creaplasm-soft/releases/download/1.00/Creaplasm-soft.zip
 unzip Creaplasm-soft.zip -d /home/ecmo/mainSoft 
 chmod +x /home/ecmo/mainSoft/Creaplasm-soft
+
+echo "Telechargement de script d'arret par bouton du raspberry"
+wget https://github.com/PROJET-BTS-SN-ECMO/shutdownPushButton/releases/download/1.00/shutdownPushButton.zip
+unzip shutdownPushButton.zip -d /home/ecmo/developpement/
+chmod +x /home/ecmo/developpement/shutdownPushButton/script.sh
+cp /home/ecmo/developpement/shutdownPushButton/btnService.service /etc/systemd/system
+systemctl enable btnService.service
+echo "[Unit]\nDescription=Logiciel Creaplasm\n[Service]\nExecStart=/home/ecmo/mainSoft/Creaplasm-soft\n[Install]\nWantedBy=multi-user.target" > /etc/systemd/system/softCrea.service
+systemctl enable softCrea.service
 
 read -p "Appuyer pour entrer pour redemarrer" 
 reboot
