@@ -47,12 +47,14 @@ wget https://github.com/PROJET-BTS-SN-ECMO/creaplasm-depot/releases/download/1.0
 wget https://github.com/PROJET-BTS-SN-ECMO/creaplasm-depot/releases/download/1.00/softCrea.service
 unzip mainsoft-arduino.zip -d /home/ecmo/mainsoft-arduino
 unzip Creaplasm-soft.zip -d /home/ecmo/mainSoft
-unzip shutdownPushButton.zip -d /home/ecmo/developpement/
+unzip shutdownPushButton.zip -d /home/ecmo/
 
 echo "Ajout de droit sur les composant logiciel"
 chown -R ecmo:ecmo /home/ecmo/mainsoft-arduino
+chmod -R /home/ecmo/mainSoft/Creaplasm-soft
+chmod -R /home/ecmo/shutdownPushButton/script.sh
 chmod +x /home/ecmo/mainSoft/Creaplasm-soft
-chmod +x /home/ecmo/developpement/shutdownPushButton/script.sh
+chmod +x /home/ecmo/shutdownPushButton/script.sh
 
 echo "Ajout des deux services au demarage du systeme d'exploitation"
 cp /home/ecmo/developpement/shutdownPushButton/btnService.service /etc/systemd/system
