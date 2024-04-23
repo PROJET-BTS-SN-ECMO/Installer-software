@@ -51,8 +51,8 @@ echo "Wiring PI installer"
 
 echo "Ajout de droit sur les composant logiciel"
 chown -R ecmo:ecmo /home/ecmo/mainsoft-arduino
-chmod -R /home/ecmo/mainSoft/Creaplasm-soft
-chmod -R /home/ecmo/shutdownPushButton/script.sh
+chmod -R ecmo:ecmo /home/ecmo/mainSoft/Creaplasm-soft
+chmod -R ecmo:ecmo /home/ecmo/shutdownPushButton/script.sh
 chmod +x /home/ecmo/mainSoft/Creaplasm-soft/CreaplasmSoft
 chmod +x /home/ecmo/shutdownPushButton/script.sh
 
