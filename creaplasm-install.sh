@@ -35,15 +35,17 @@ echo "installation des dependence "
 apt-get install qt6-base-dev arduino -y
 echo "Installation de dependance effectuer"
 
+mkdir /soft
+
 echo "Telechargement des composant logiciel"
 wget https://github.com/WiringPi/WiringPi/releases/download/3.2/wiringpi_3.2_arm64.deb
 wget https://github.com/PROJET-BTS-SN-ECMO/creaplasm-depot/releases/download/1.00/mainsoft-arduino.zip
 wget https://github.com/PROJET-BTS-SN-ECMO/creaplasm-depot/releases/download/1.05/Creaplasm-soft.zip
 wget https://github.com/PROJET-BTS-SN-ECMO/creaplasm-depot/releases/download/1.05/shutdownPushButton.zip
-wget https://github.com/PROJET-BTS-SN-ECMO/creaplasm-depot/releases/download/1.00/softCrea.service
+wget https://github.com/PROJET-BTS-SN-ECMO/creaplasm-depot/releases/download/1.05/softCrea.service
 unzip mainsoft-arduino.zip -d /home/ecmo/mainsoft-arduino
-unzip Creaplasm-soft.zip -d /home/ecmo/mainSoft
-unzip shutdownPushButton.zip -d /home/ecmo/
+unzip Creaplasm-soft.zip -d /soft
+unzip shutdownPushButton.zip -d /soft
 
 echo "installer de wiringPi"
 apt-get install ./wiringpi_3.2_arm64.deb -y 
@@ -51,13 +53,11 @@ echo "Wiring PI installer"
 
 echo "Ajout de droit sur les composant logiciel"
 chown -R ecmo:ecmo /home/ecmo/mainsoft-arduino
-chmod -R ecmo:ecmo /home/ecmo/mainSoft/Creaplasm-soft
-chmod -R ecmo:ecmo /home/ecmo/shutdownPushButton/script.sh
-chmod +x /home/ecmo/mainSoft/Creaplasm-soft/CreaplasmSoft
-chmod +x /home/ecmo/shutdownPushButton/script.sh
+chmod +x /soft/Creaplasm-soft/CreaplasmSoft
+chmod +x /soft/shutdownPushButton/script.sh
 
 echo "Ajout des deux services au demarage du systeme d'exploitation"
-cp /home/ecmo/developpement/shutdownPushButton/btnService.service /etc/systemd/system
+cp /home/ecmo/shutdownPushButton/btnService.service /etc/systemd/system
 cp /root/softCrea.service /etc/systemd/system
 
 echo "Brancher l'arduino Nano et ouvree l'IDE Arduino "
