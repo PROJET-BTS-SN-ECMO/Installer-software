@@ -43,6 +43,7 @@ wget https://github.com/PROJET-BTS-SN-ECMO/creaplasm-depot/releases/download/1.0
 wget https://github.com/PROJET-BTS-SN-ECMO/creaplasm-depot/releases/download/1.05/Creaplasm-soft.zip
 wget https://github.com/PROJET-BTS-SN-ECMO/creaplasm-depot/releases/download/1.05/shutdownPushButton.zip
 wget https://github.com/PROJET-BTS-SN-ECMO/creaplasm-depot/releases/download/1.05/softCrea.service
+wget https://github.com/PROJET-BTS-SN-ECMO/creaplasm-depot/releases/download/1.05/myapp.desktop
 unzip mainsoft-arduino.zip -d /home/ecmo/mainsoft-arduino
 unzip Creaplasm-soft.zip -d /soft
 unzip shutdownPushButton.zip -d /soft
@@ -52,14 +53,16 @@ apt-get install ./wiringpi_3.2_arm64.deb -y
 echo "Wiring PI installer"
 
 echo "Ajout de droit sur les composant logiciel"
+mkdir /home/ecmo/.config/autostart
+cp myapp.desktop /home/ecmo/.config/autostart
 chown -R ecmo:ecmo /home/ecmo/mainsoft-arduino
+chown -R ecmo:ecmo /home/ecmo/.config/autostart
 chmod +x /soft/Creaplasm-soft/CreaplasmSoft
 chmod +x /soft/shutdownPushButton/script.sh
 
 echo "Ajout des deux services au demarage du systeme d'exploitation"
-cp /home/ecmo/shutdownPushButton/btnService.service /etc/systemd/system
+cp /soft/shutdownPushButton/btnService.service /etc/systemd/system
 cp /root/softCrea.service /etc/systemd/system
-
 echo "Brancher l'arduino Nano et ouvree l'IDE Arduino "
 echo "Et televersser le programme qui se trouve dans /home/ecmo/mainsoft-arduino"
 read -p "Appuyer pour entrer pour continuer une fois que vous avez televerser le logiciel dans l'arduino"
