@@ -40,10 +40,8 @@ mkdir /soft
 echo "Telechargement des composant logiciel"
 wget https://github.com/WiringPi/WiringPi/releases/download/3.2/wiringpi_3.2_arm64.deb
 wget https://github.com/PROJET-BTS-SN-ECMO/creaplasm-depot/releases/download/1.05/Creaplasm-soft.zip
-wget https://github.com/PROJET-BTS-SN-ECMO/creaplasm-depot/releases/download/1.05/shutdownPushButton.zip
 wget https://github.com/PROJET-BTS-SN-ECMO/creaplasm-depot/releases/download/1.05/myapp.desktop
 unzip Creaplasm-soft.zip -d /soft
-unzip shutdownPushButton.zip -d /soft
 
 echo "installer de wiringPi"
 apt-get install ./wiringpi_3.2_arm64.deb -y 
@@ -52,17 +50,10 @@ echo "Wiring PI installer"
 echo "Ajout de droit sur les composant logiciel"
 mkdir /home/ecmo/.config/autostart
 cp myapp.desktop /home/ecmo/.config/autostart
-chown -R ecmo:ecmo /home/ecmo/mainsoft-arduino
 chown -R ecmo:ecmo /home/ecmo/.config/autostart
 chmod +x /soft/Creaplasm-soft/CreaplasmSoft
-chmod +x /soft/shutdownPushButton/script.sh
-
-echo "Ajout des deux services au demarage du systeme d'exploitation"
-cp /soft/shutdownPushButton/btnService.service /etc/systemd/system
-
-echo "Activation des service"
-systemctl enable btnService.service
 
 echo "Composant logiciel installer redemarer pour utiliser le system"
 read -p "Appuyer pour entrer pour redemarrer" 
+apt autoremove -y
 reboot
