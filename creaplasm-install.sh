@@ -32,19 +32,16 @@ apt update
 apt upgrade -y
 
 echo "installation des dependence "
-apt-get install qt6-base-dev arduino -y
+apt-get install qt6-base-dev -y
 echo "Installation de dependance effectuer"
 
 mkdir /soft
 
 echo "Telechargement des composant logiciel"
 wget https://github.com/WiringPi/WiringPi/releases/download/3.2/wiringpi_3.2_arm64.deb
-wget https://github.com/PROJET-BTS-SN-ECMO/creaplasm-depot/releases/download/1.00/mainsoft-arduino.zip
 wget https://github.com/PROJET-BTS-SN-ECMO/creaplasm-depot/releases/download/1.05/Creaplasm-soft.zip
 wget https://github.com/PROJET-BTS-SN-ECMO/creaplasm-depot/releases/download/1.05/shutdownPushButton.zip
-wget https://github.com/PROJET-BTS-SN-ECMO/creaplasm-depot/releases/download/1.05/softCrea.service
 wget https://github.com/PROJET-BTS-SN-ECMO/creaplasm-depot/releases/download/1.05/myapp.desktop
-unzip mainsoft-arduino.zip -d /home/ecmo/mainsoft-arduino
 unzip Creaplasm-soft.zip -d /soft
 unzip shutdownPushButton.zip -d /soft
 
@@ -62,14 +59,9 @@ chmod +x /soft/shutdownPushButton/script.sh
 
 echo "Ajout des deux services au demarage du systeme d'exploitation"
 cp /soft/shutdownPushButton/btnService.service /etc/systemd/system
-cp /root/softCrea.service /etc/systemd/system
-echo "Brancher l'arduino Nano et ouvree l'IDE Arduino "
-echo "Et televersser le programme qui se trouve dans /home/ecmo/mainsoft-arduino"
-read -p "Appuyer pour entrer pour continuer une fois que vous avez televerser le logiciel dans l'arduino"
 
 echo "Activation des service"
 systemctl enable btnService.service
-systemctl enable softCrea.service
 
 echo "Composant logiciel installer redemarer pour utiliser le system"
 read -p "Appuyer pour entrer pour redemarrer" 
