@@ -39,7 +39,7 @@ mkdir /soft
 
 echo "Telechargement des composant logiciel"
 wget https://github.com/WiringPi/WiringPi/releases/download/3.2/wiringpi_3.2_arm64.deb
-wget https://github.com/PROJET-BTS-SN-ECMO/creaplasm-depot/releases/download/1.05/Creaplasm-soft.zip
+wget https://github.com/PROJET-BTS-SN-ECMO/creaplasm-depot/releases/download/1.06/Creaplasm-soft.zip
 wget https://github.com/PROJET-BTS-SN-ECMO/creaplasm-depot/releases/download/1.05/myapp.desktop
 unzip Creaplasm-soft.zip -d /soft
 
